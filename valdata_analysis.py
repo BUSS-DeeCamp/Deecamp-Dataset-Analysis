@@ -3,7 +3,7 @@
 @Author: Zhang Zhanpeng
 @Github: https://github.com/phosphenesvision
 @Date: 2020-07-05 20:38:28
-@LastEditTime: 2020-07-05 21:26:53
+@LastEditTime: 2020-07-05 21:57:28
 '''
 import os
 import json
@@ -34,6 +34,9 @@ def write_to_csv(k: List[List[float]], s: str) -> bool:
     df = pd.DataFrame(k, columns=pd.Index(['x','y','z','l','h','w','r','np'], name='info'))
     sdir = os.path.join('./valdata', 'val_'+s + '.csv')
     df.to_csv(sdir, index=False, header=True)
+    aa = df.describe()
+    ddir = os.path.join('./valdata', 'val_'+s + '_describe.csv')
+    aa.to_csv(ddir, index=True, header=True)
 
     return True
 
@@ -44,36 +47,36 @@ def plot_csv(s: str) -> bool:
     #print(sdir)
     df = pd.read_csv(sdir)
 
-    mm = df['x'].plot.hist(bins=100, grid=True, figsize=(20,10))
-    fig = mm.get_figure()
+    mm0 = df['x'].plot.hist(bins=100, grid=True, figsize=(20,10))
+    fig = mm0.get_figure()
     fig.savefig(os.path.join('./valplot',s,'val_'+s+'_x.png'))
 
-    mm = df['y'].plot.hist(bins=100, grid=True, figsize=(20,10))
-    fig = mm.get_figure()
+    mm1 = df['y'].plot.hist(bins=100, grid=True, figsize=(20,10))
+    fig = mm1.get_figure()
     fig.savefig(os.path.join('./valplot',s,'val_'+s+'_y.png'))
 
-    mm = df['z'].plot.hist(bins=100, grid=True, figsize=(20,10))
-    fig = mm.get_figure()
+    mm2 = df['z'].plot.hist(bins=100, grid=True, figsize=(20,10))
+    fig = mm2.get_figure()
     fig.savefig(os.path.join('./valplot',s,'val_'+s+'_z.png'))
 
-    mm = df['l'].plot.hist(bins=100, grid=True, figsize=(20,10))
-    fig = mm.get_figure()
+    mm3 = df['l'].plot.hist(bins=100, grid=True, figsize=(20,10))
+    fig = mm3.get_figure()
     fig.savefig(os.path.join('./valplot',s,'val_'+s+'_l.png'))
 
-    mm = df['h'].plot.hist(bins=100, grid=True, figsize=(20,10))
-    fig = mm.get_figure()
+    mm4 = df['h'].plot.hist(bins=100, grid=True, figsize=(20,10))
+    fig = mm4.get_figure()
     fig.savefig(os.path.join('./valplot',s,'val_'+s+'_h.png'))
 
-    mm = df['w'].plot.hist(bins=100, grid=True, figsize=(20,10))
-    fig = mm.get_figure()
+    mm5 = df['w'].plot.hist(bins=100, grid=True, figsize=(20,10))
+    fig = mm5.get_figure()
     fig.savefig(os.path.join('./valplot',s,'val_'+s+'_w.png'))
 
-    mm = df['r'].plot.hist(bins=100, grid=True, figsize=(20,10))
-    fig = mm.get_figure()
+    mm6 = df['r'].plot.hist(bins=100, grid=True, figsize=(20,10))
+    fig = mm6.get_figure()
     fig.savefig(os.path.join('./valplot',s,'val_'+s+'_r.png'))
     
-    mm = df['np'].plot.hist(bins=100, grid=True, figsize=(20,10))
-    fig = mm.get_figure()
+    mm7 = df['np'].plot.hist(bins=100, grid=True, figsize=(20,10))
+    fig = mm7.get_figure()
     fig.savefig(os.path.join('./valplot',s,'val_'+s+'_np.png'))
 
 
