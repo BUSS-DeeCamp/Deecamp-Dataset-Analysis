@@ -1,3 +1,10 @@
+'''
+@Description:  
+@Author: Zhang Zhanpeng
+@Github: https://github.com/phosphenesvision
+@Date: 2020-07-09 19:46:21
+@LastEditTime: 2020-07-09 20:17:39
+'''
 import os
 import json
 import numpy as np
@@ -24,7 +31,7 @@ def get_data(s: str) -> List[List[float]]:
 
 def write_to_csv(k: List[List[float]], s: str) -> bool:
 
-    df = pd.DataFrame(k, columns=pd.Index(['x','y','z','l','h','w','r','np'], name='info'))
+    df = pd.DataFrame(k, columns=pd.Index(['x','y','z','l','w','h','r','np'], name='info'))
     sdir = os.path.join('./traindata', 'train_'+s + '.csv')
     df.to_csv(sdir, index=False, header=True)
     aa = df.describe()
@@ -40,47 +47,32 @@ def plot_csv(s: str) -> bool:
     #print(sdir)
     df = pd.read_csv(sdir)
 
-    mm0 = df['x'].plot.hist(bins=100, grid=True, figsize=(20,10))
-    fig = mm0.get_figure()
-    fig.savefig(os.path.join('./trainplot',s,'train_'+s+'_x.png'))
+    attribute = ['x', 'y', 'z', 'l', 'w', 'h', 'r', 'np']
 
-    mm1 = df['y'].plot.hist(bins=100, grid=True, figsize=(20,10))
-    fig = mm1.get_figure()
-    fig.savefig(os.path.join('./trainplot',s,'train_'+s+'_y.png'))
-
-    mm2 = df['z'].plot.hist(bins=100, grid=True, figsize=(20,10))
-    fig = mm2.get_figure()
-    fig.savefig(os.path.join('./trainplot',s,'train_'+s+'_z.png'))
-
-    mm3 = df['l'].plot.hist(bins=100, grid=True, figsize=(20,10))
-    fig = mm3.get_figure()
-    fig.savefig(os.path.join('./trainplot',s,'train_'+s+'_l.png'))
-
-    mm4 = df['h'].plot.hist(bins=100, grid=True, figsize=(20,10))
-    fig = mm4.get_figure()
-    fig.savefig(os.path.join('./trainplot',s,'train_'+s+'_h.png'))
-
-    mm5 = df['w'].plot.hist(bins=100, grid=True, figsize=(20,10))
-    fig = mm5.get_figure()
-    fig.savefig(os.path.join('./trainplot',s,'train_'+s+'_w.png'))
-
-    mm6 = df['r'].plot.hist(bins=100, grid=True, figsize=(20,10))
-    fig = mm6.get_figure()
-    fig.savefig(os.path.join('./trainplot',s,'train_'+s+'_r.png'))
+    for name in attribute:
+        mm = df[name].plot.hist(bins=100, grid=True, rwidth = 0.8, figsize=(20,10))
+        fig = mm.get_figure()
+        fig.savefig(os.path.join('./trainplot',s,'train_'+s+'_'+name+'.png'))
+        plt.close()
     
-    mm7 = df['np'].plot.hist(bins=100, grid=True, figsize=(20,10))
-    fig = mm7.get_figure()
-    fig.savefig(os.path.join('./trainplot',s,'train_'+s+'_np.png'))
-
 
     return True
 
 if "__main__" == __name__:
 
+    plot_csv('Car')
+    plot_csv('Truck')
+    plot_csv('Tricar')
+    plot_csv('Cyclist')
+    plot_csv('Pedestrian')
+    plot_csv('DontCare')
+
+    '''
     Car = get_data('Car')
     print(len(Car))
     write_to_csv(Car, 'Car')
     plot_csv('Car')
+
 
     Truck = get_data('Truck')
     print(len(Truck))
@@ -106,4 +98,4 @@ if "__main__" == __name__:
     print(len(DontCare))
     write_to_csv(DontCare, 'DontCare')
     plot_csv('DontCare')
-
+    '''
